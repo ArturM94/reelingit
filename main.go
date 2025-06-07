@@ -4,6 +4,7 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/ArturM94/reelingit/handlers"
 	"github.com/ArturM94/reelingit/logger"
 )
 
@@ -22,6 +23,10 @@ func initializeLogger() *logger.Logger {
 
 func main() {
 	logInstance := initializeLogger()
+
+	movieHandler := handlers.MovieHandler{}
+
+	http.HandleFunc("/api/movies/top", movieHandler.GetTopMovies)
 
 	http.Handle("/", http.FileServer(http.Dir("public")))
 
