@@ -6,6 +6,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/ArturM94/reelingit/data"
 	"github.com/ArturM94/reelingit/handlers"
 	"github.com/ArturM94/reelingit/logger"
 	"github.com/joho/godotenv"
@@ -42,6 +43,11 @@ func main() {
 		log.Fatalf("Failed to connect to the DB: %v", err)
 	}
 	defer db.Close()
+
+	movieRepo, err := data.NewMovieRepository(db, logInstance)
+	if err != nil {
+		log.Fatalf("Failed to initialize Movie repository")
+	}
 
 	movieHandler := handlers.MovieHandler{}
 
