@@ -5,14 +5,23 @@ import (
 	"fmt"
 	"io/ioutil"
 	"log"
+	"os"
 	"strings"
 
+	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
 )
 
 func main() {
+	if err := godotenv.Load(); err != nil {
+		log.Fatal("No .env file was available")
+	}
+
 	// Database connection string for your remote PostgreSQL database
-	connStr := "postgres://username:password@remote-host:port/database?sslmode=disable"
+	connStr := os.Getenv("DATABASE_URL")
+	if connStr == "" {
+		log.Fatal("DATABASE_URL not set")
+	}
 
 	// Open database connection
 	db, err := sql.Open("postgres", connStr)
