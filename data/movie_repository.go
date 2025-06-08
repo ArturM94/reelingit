@@ -3,7 +3,6 @@ package data
 import (
 	"database/sql"
 	"errors"
-	"strconv"
 
 	"github.com/ArturM94/reelingit/logger"
 	"github.com/ArturM94/reelingit/models"
