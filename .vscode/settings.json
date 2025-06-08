@@ -1,0 +1,9 @@
+{
+    "evenBetterToml.schema.enabled": false,
+    "files.associations": {
+        ".air.toml": "plaintext"
+    },
+    "evenBetterToml.schema.associations": {
+        "**/.air.toml": null
+    }
+}
