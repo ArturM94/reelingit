@@ -4,8 +4,10 @@ import './components/HomePage.js';
 import './components/AnimatedLoading.js';
 import './components/MovieDetailsPage.js';
 import './components/YouTubeEmbed.js';
+import { Router } from './services/Router.js';
 
 window.app = {
+  Router,
   /**
    * @param {Event} event
    */
