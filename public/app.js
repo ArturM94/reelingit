@@ -13,6 +13,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
 /** @type {{ Router: typeof Router, search: (event: Event) => void, api: typeof API }} */
 const app = {
   Router,
+  showError: (message = 'There was an error.', goHome = true) => {
+    /** @type {HTMLDialogElement} */
+    const dialog = document.getElementById('alert-modal');
+    dialog.showModal();
+    document.querySelector('#alert-modal p').textContent = message;
+
+    if (goHome) {
+      app.Router.go('/');
+    }
+  },
+  closeError: () => {
+    /** @type {HTMLDialogElement} */
+    const dialog = document.getElementById('alert-modal');
+    dialog.close();
+  },
   /**
    * @param {Event} event
    */
