@@ -6,7 +6,12 @@ import './components/MovieDetailsPage.js';
 import './components/YouTubeEmbed.js';
 import { Router } from './services/Router.js';
 
-window.app = {
+window.addEventListener('DOMContentLoaded', (event) => {
+  app.Router.init();
+});
+
+/** @type {{ Router: typeof Router, search: (event: Event) => void, api: typeof API }} */
+const app = {
   Router,
   /**
    * @param {Event} event
@@ -19,3 +24,5 @@ window.app = {
   // for debugging purpose
   api: API,
 };
+
+window.app = app;

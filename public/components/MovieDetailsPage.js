@@ -52,7 +52,7 @@ export class MovieDetailsPage extends HTMLElement {
   }
 
   connectedCallback() {
-    this.id = this.dataset.id ?? 14;
+    this.id = this.params[0];
     this.render();
   }
 }
