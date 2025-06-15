@@ -7,6 +7,12 @@ export const API = {
     return API.fetch('/movies/random');
   },
   /**
+   * @returns {Array<{ name: string; id: number }>}
+   */
+  getGenres: async () => {
+    return API.fetch('/genres');
+  },
+  /**
    * @param {number} id
    */
   getMovieById: async (id) => {

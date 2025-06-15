@@ -33,6 +33,21 @@ export class MoviesPage extends HTMLElement {
     }
   }
 
+  async loadGenres() {
+    const genres = await API.getGenres();
+    const select = document.querySelector('select#filter');
+    select.innerHTML = `
+      <option>Filter by Genre</option>
+    `;
+
+    genres.forEach((genre) => {
+      const option = document.createElement('option');
+      option.value = genre.id;
+      option.textContent = genre.name;
+      select.appendChild(option);
+    });
+  }
+
   connectedCallback() {
     const template = document.getElementById('template-movies');
     const content = template.content.cloneNode(true);
@@ -47,6 +62,8 @@ export class MoviesPage extends HTMLElement {
     } else {
       app.showError();
     }
+
+    this.loadGenres();
   }
 }
 
