@@ -25,7 +25,7 @@ export const API = {
    * @param {any} args
    */
   fetch: async (serviceName, args) => {
-    const queryString = args ? new URLSearchParams(args).toString : '';
+    const queryString = args ? new URLSearchParams(args).toString() : '';
 
     try {
       const response = await fetch(

@@ -34,7 +34,7 @@ const app = {
   search: (event) => {
     event.preventDefault();
     const q = document.querySelector('input[type=search]').value;
-    // TODO
+    app.Router.go(`/movies?q=${q}`);
   },
   // for debugging purpose
   api: API,
