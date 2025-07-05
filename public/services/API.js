@@ -27,6 +27,42 @@ export const API = {
     return API.fetch('/movies/search', { q, order, genre });
   },
   /**
+   * 
+   * @param {string} name
+   * @param {string} email
+   * @param {string} password
+   */
+  register: async (name, email, password) => {
+    return API.send('/account/register', { name, email, password })
+  },
+  /**
+   * 
+   * @param {string} email
+   * @param {string} password
+   */
+  login: async (email, password) => {
+    return API.send('/account/authenticate', { email, password })
+  },
+  /**
+   * 
+   * @param {string} serviceName
+   * @param {any} data
+   */
+  send: async (serviceName, data) => {
+    try {
+      const response = await fetch(API.baseURL + serviceName, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data),
+      });
+      const result = await response.json();
+
+      return result;
+    } catch (e) {
+      console.error(e);
+    }
+  },
+  /**
    * @param {string} serviceName
    * @param {any} args
    */
