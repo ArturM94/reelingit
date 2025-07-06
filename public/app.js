@@ -13,7 +13,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 /** @type {{ Router: typeof Router, search: (event: Event) => void, api: typeof API }} */
 const app = {
   Router,
-  showError: (message = 'There was an error.', goHome = true) => {
+  showError: (message = 'There was an error.', goHome = false) => {
     /** @type {HTMLDialogElement} */
     const dialog = document.getElementById('alert-modal');
     dialog.showModal();
@@ -88,6 +88,29 @@ const app = {
   },
   login: async (event) => {
     event.preventDefault();
+    const email = document.getElementById('login-password').value;
+    const password = document.getElementById('login-password').value;
+
+    const errors = [];
+
+    if (password.length < 7) {
+      errors.push('Enter your password with at least 7 characters.');
+    }
+
+    if (email.length < 4) {
+      errors.push('Enter your complete email.');
+    }
+
+    if (errors.length === 0) {
+      const response = await API.login(email, password);
+      if (response.success) {
+        app.Router.go('/account/');
+      } else {
+        app.showError(response.message);
+      }
+    } else {
+      app.showError(errors.join(' '));
+    }
   },
   // for debugging purpose
   api: API,
