@@ -5,6 +5,7 @@ import './components/AnimatedLoading.js';
 import './components/MovieDetailsPage.js';
 import './components/YouTubeEmbed.js';
 import { Router } from './services/Router.js';
+import Store from './services/Store.js';
 
 window.addEventListener('DOMContentLoaded', (event) => {
   app.Router.init();
@@ -13,6 +14,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
 /** @type {{ Router: typeof Router, search: (event: Event) => void, api: typeof API }} */
 const app = {
   Router,
+  Store,
   showError: (message = 'There was an error.', goHome = false) => {
     /** @type {HTMLDialogElement} */
     const dialog = document.getElementById('alert-modal');
@@ -78,6 +80,7 @@ const app = {
     if (errors.length === 0) {
       const response = await API.register(name, email, password);
       if (response.success) {
+        app.Store.jwt = response.jwt;
         app.Router.go('/account/');
       } else {
         app.showError(response.message);
@@ -104,6 +107,7 @@ const app = {
     if (errors.length === 0) {
       const response = await API.login(email, password);
       if (response.success) {
+        app.Store.jwt = response.jwt;
         app.Router.go('/account/');
       } else {
         app.showError(response.message);
