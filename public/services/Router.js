@@ -30,9 +30,12 @@ export const Router = {
 
     const routePath = route.includes('?') ? route.split('?')[0] : route;
 
+    let needsLogin = false;
+
     for (const r of routes) {
       if (typeof r.path === 'string' && r.path === routePath) {
         pageElement = new r.component();
+        needsLogin = r.loggedIn === true;
         break;
       }
 
@@ -42,9 +45,16 @@ export const Router = {
           pageElement = new r.component();
           const params = match.slice(1);
           pageElement.params = params;
+          needsLogin = r.loggedIn === true;
           break;
         }
       }
+    }
+
+    if (pageElement && needsLogin && window.app.Store.loggedIn === false) {
+      window.app.Router.go('/account/login');
+
+      return;
     }
 
     if (!pageElement) {
