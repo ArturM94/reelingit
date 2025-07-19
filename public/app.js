@@ -91,7 +91,7 @@ const app = {
   },
   login: async (event) => {
     event.preventDefault();
-    const email = document.getElementById('login-password').value;
+    const email = document.getElementById('login-email').value;
     const password = document.getElementById('login-password').value;
 
     const errors = [];
