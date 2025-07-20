@@ -69,6 +69,8 @@ func main() {
 	http.Handle("/api/account/favorites", accountHandler.AuthMiddleware(http.HandlerFunc(accountHandler.GetFavorites)))
 	http.Handle("/api/account/watchlist", accountHandler.AuthMiddleware(http.HandlerFunc(accountHandler.GetWatchlist)))
 
+	http.Handle("/api/account/save-to-collection", accountHandler.AuthMiddleware(http.HandlerFunc(accountHandler.SaveToCollection)))
+
 	catchAllClientRoutesHandler := func(w http.ResponseWriter, r *http.Request) {
 		http.ServeFile(w, r, "./public/index.html")
 	}

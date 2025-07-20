@@ -27,24 +27,38 @@ export const API = {
     return API.fetch('/movies/search', { q, order, genre });
   },
   /**
-   * 
    * @param {string} name
    * @param {string} email
    * @param {string} password
    */
   register: async (name, email, password) => {
-    return API.send('/account/register', { name, email, password })
+    return API.send('/account/register', { name, email, password });
   },
   /**
-   * 
    * @param {string} email
    * @param {string} password
    */
   login: async (email, password) => {
-    return API.send('/account/authenticate', { email, password })
+    return API.send('/account/authenticate', { email, password });
+  },
+  getFavorites: async () => {
+    return API.fetch('/account/favorites');
+  },
+  getWatchlist: async () => {
+    return API.fetch('/account/watchlist');
   },
   /**
-   * 
+   * @param {number} movieId
+   * @param {'favorite' | 'watchlist'} collection 
+   * @returns 
+   */
+  saveToCollection: async (movieId, collection) => {
+    return API.send('/account/save-to-collection', {
+      movieId,
+      collection,
+    });
+  },
+  /**
    * @param {string} serviceName
    * @param {any} data
    */
@@ -52,7 +66,12 @@ export const API = {
     try {
       const response = await fetch(API.baseURL + serviceName, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: window.app.Store.jwt
+            ? `Bearer ${window.app.Store.jwt}`
+            : null,
+        },
         body: JSON.stringify(data),
       });
       const result = await response.json();
@@ -71,7 +90,14 @@ export const API = {
 
     try {
       const response = await fetch(
-        API.baseURL + serviceName + '?' + queryString
+        API.baseURL + serviceName + '?' + queryString,
+        {
+          headers: {
+            Authorization: window.app.Store.jwt
+              ? `Bearer ${window.app.Store.jwt}`
+              : null,
+          },
+        }
       );
       const result = await response.json();
 

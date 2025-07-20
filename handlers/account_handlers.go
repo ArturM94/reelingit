@@ -172,7 +172,7 @@ func (h *AccountHandler) AuthMiddleware(next http.Handler) http.Handler {
 
 func (h *AccountHandler) SaveToCollection(w http.ResponseWriter, r *http.Request) {
 	type CollectionRequest struct {
-		MovieID    int    `json:"movie_id"`
+		MovieID    int    `json:"movieId"`
 		Collection string `json:"collection"`
 	}
 

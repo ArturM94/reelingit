@@ -37,6 +37,18 @@ export class MovieDetailsPage extends HTMLElement {
       ulGenres.appendChild(li);
     });
 
+    /** @type {HTMLButtonElement} */
+    const favoritesButton = this.querySelector('#actions #favorites-btn');
+    favoritesButton.addEventListener('click', () => {
+      window.app.saveToCollection(this.movie.id, 'favorite');
+    });
+    
+    /** @type {HTMLButtonElement} */
+    const watchlistButton = this.querySelector('#actions #watchlist-btn');
+    watchlistButton.addEventListener('click', () => {
+      window.app.saveToCollection(this.movie.id, 'watchlist');
+    });
+
     const ulCast = this.querySelector('#cast');
     ulCast.innerHTML = '';
     this.movie.casting.forEach((actor) => {

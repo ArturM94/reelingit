@@ -50,6 +50,29 @@ const app = {
     const order = urlParams.get('order') ?? '';
     app.Router.go(`/movies?q=${q}&order=${order}&genre=${genre}`);
   },
+  saveToCollection: async (movieId, collection) => {
+    if (!app.Store.loggedIn) {
+      return app.Router.go('/account/');
+    }
+
+    try {
+      const response = await API.saveToCollection(movieId, collection);
+
+      if (response.success) {
+        switch (collection) {
+          case 'favorite':
+            app.Router.go('/account/favorites');
+            break;
+          case 'watchlist':
+            app.Router.go('/account/watchlist');
+        }
+      } else {
+        app.showError("We couldn't save the movie.");
+      }
+    } catch (e) {
+      console.log(e);
+    }
+  },
   register: async (event) => {
     event.preventDefault();
     const name = document.getElementById('register-name').value;
